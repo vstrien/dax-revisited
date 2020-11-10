@@ -1,18 +1,43 @@
 # DAX Revisited
 
-Veel te ambitieus, maar toch:
+Waaay to ambitious, but still.
 
-Zou het mogelijk zijn om een DAX engine te bouwen? Gewoon, eentje die een deel van de taal begrijpt? Niet om te concurreren of te verbeteren, maar om de werking beter te snappen. En om 'm cross-platform te hebben 😈.
+I've walked around with this idea for quite some time, so why not give it a shot.
 
-Een paar aspecten waar ik aan denk:
+Would it be possible to build a DAX engine? You know, like the one used in Power BI or Analysis Services. Not to compete or improve, but to better "get" the inner workings. And to have it cross-platform 😈.
 
-* Columnar storage nabouwen (en de uitdagingen / mogelijkheden daarvan meemaken)
-* Interpreteren van eenvoudige DAX query concepten als EVALUATE SUM('Tabel'[Kolom])
-* Uitdagingen van contexten ondervinden vanuit de programmeer-kant
+Just some aspects I've been thinking of:
+
+* Microsoft has built Power Pivot (looong time ago) on a "converted" SQL Server Analysis Services engine. 
+  * We could start off using another (open source) OLAP engine
+  * But hey, that would probably make it more complex
+  * Although it might be an opportunity to learn more about OLAP engines
+  * But no. For me currently it's not about speed, but about the evaluation of the DAX language
+* DAX is a functional language (not in the general-purpose way Power Query is - which resembles OCaml and thus F# - but still it's a functional language). Should I implement this in a functional language?
+  * Performance might be hurt (some things just are "dirty" somewhat faster)
+  * But performance isn't the primary concern
+  * Would be great to brush off functional programming skills as well
+* Which language? (functional or not)
+  * First attempt: Python. Because I've loads of experience in Python.
+  * Second thought: use a Microsoft-language that can use .Net
+    * open source shouldn't be a problem (.Net Core)
+    * When I haven't implemented a part myself, I can use the external interface from other software
+      * For example, use an existing Power BI or SSAS library to see the external interface
+      * Or get a headstart by using existing functionality in Tabular Editor
+  * Microsoft-language + open source = F#?
+* A good first step would be to load an existing PBIT-file.
+  * Tabular Editor and ALM Toolkit are both open-source and can both access existing PBIT-files
+  * If we can "load" an existing PBIT-file, then we have a "fitting" way to store our data model and measures (apart from the data)
+* A second step would be to load data itself
+  * Rebuilding columnar storage shouldn't be as hard. Conceptually, at least. But even if we don't, we just have to store it.
+  * If it's possible (not encrypted) load it from a Power BI file
+  * Otherwise think of a way to load data directly (maybe from a SQL Server refresh, bypassing Power Query and likewise tools)
+* Then we could implement simple query concepts like `EVALUATE SUM('Table'[Column])`
+* Where the truly interesting stuff happens is experiencing context switches from a programming side. We could a lot from that.
 
 Om dit enigszins succesvol te kunnen laten zijn, is het belangrijk om test-driven te beginnen. De verleiding is groot om direct van start te gaan, een database-verbinding op te leren zetten en data in te tanken. Dat is zeker interessant voor grootschalige(re) testen, maar niet het belangrijkste: het gaat om het query parsen (het "tot resultaat komen"), dat je juist met zo klein mogelijke datasets wilt kunnen doen.
 
-Bijkomend voordeel is dat het een mooie kans is om beter test-driven te leren werken in Python. En laat dat nou net zijn wat ik graag wilde ;-).
+Bijkomend voordeel is dat het een mooie kans is om beter test-driven te leren werken.
 
 ## Hoogover ontwerp
 
