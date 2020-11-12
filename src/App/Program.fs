@@ -16,10 +16,11 @@ let ExtractModel sourcefile =
 
 [<EntryPoint>]
 let main argv =
-    printfn "OK!"
+    printfn "Loading.."
 
     for arg in argv do
         let value = ExtractModel arg
-        printfn "%s" (value.model.tables.[0].name)
+        for table in value.model.tables do
+            printfn "Table %s" (table.name)
 
     0 // return an integer exit code
