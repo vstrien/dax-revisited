@@ -26,7 +26,15 @@ Just some aspects I've been thinking of:
       * Or get a headstart by using existing functionality in Tabular Editor
   * Microsoft-language + open source = F#?
 * A good first step would be to load an existing PBIT-file.
-  * Tabular Editor and ALM Toolkit are both open-source and can both access existing PBIT-files
+  * Tabular Editor 
+    * Is licensed under MIT
+    * Has a "wrapper" for the [Tabular Object Model (TOM)](https://github.com/otykier/TabularEditor/tree/master/TOMWrapper/TOMWrapper)
+    * Can be useful for structure, although it uses the Microsoft.AnalysisServices.Tabular library on several places (which is windows-only)
+    * As an extensive tool, it also has all kinds of features (like partitions) we don't need to build a working DAX core.
+  * ALM Toolkit (BISM Normalizer) is open-source as well (?)
+    * Also has some information about [a data model](https://github.com/microsoft/Analysis-Services/tree/master/BismNormalizer/BismNormalizer/TabularCompare/TabularMetadata) (note that it's not aimed at storing data, but still tells something about the metadata)
+    * Is licensed under MIT license
+    * Uses Microsoft.AnalysisServices.Tabular library on several places as well (which is still win-only)
   * If we can "load" an existing PBIT-file, then we have a "fitting" way to store our data model and measures (apart from the data)
 * A second step would be to load data itself
   * Rebuilding columnar storage shouldn't be as hard. Conceptually, at least. But even if we don't, we just have to store it.
