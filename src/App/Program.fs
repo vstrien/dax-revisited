@@ -20,31 +20,24 @@ let ExtractModel sourcefile =
     JsonConvert.DeserializeObject<DataModelSchema>(sr.ReadToEnd())
 
 let LoadData (sourcefolder: string, table: Table) =
-    let tablename = table.name
-    let filepath = sprintf "/Users/vstrien/src/hobby/dax-revisited/sample-file/csv/%s.csv" tablename
-    let tablecontents = CsvFile.Load(filepath)
+    let tablecontents = 
+        sprintf "%s/%s.csv" sourcefolder table.name
+        |> CsvFile.Load
     
-    let tableColumnDataList = [
+    [
         for column in table.columns do
-            printfn "Trying to get column index of %s " column.name
             if tablecontents.TryGetColumnIndex(column.name) <> None then
-                printfn "Column %s present. Loading ..." column.name
-                let columnIndex = tablecontents.GetColumnIndex(column.name)
                 let columnValues = [
                     for row in tablecontents.Rows do
-                        row.[columnIndex]
+                        row.[column.name] // This is not great: integers are stored as strings. However, first focus is a working DAX engine - we can load data. And that's cool.
                 ]
-                
-                printfn "%d rows loaded" columnValues.Length
-
-                let columnData = {
+                                
+                {
                     column = column
                     values = columnValues
                 }
-                columnData
     ]
 
-    tableColumnDataList
 [<EntryPoint>]
 let main argv =
     printfn "Loading.."
