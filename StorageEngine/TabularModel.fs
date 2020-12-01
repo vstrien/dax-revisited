@@ -8,7 +8,19 @@
  * 
  *)
 module TabularModel
+
+open ModelMetadata
+
 exception Unsupported of string
+
+type ColumnData<'T> = {
+    column: Column
+    values: list<'T>
+}
+
+type DataTable = {
+    columns: list<ColumnData<obj>>
+}
 
 type elt = 
     | Bool of bool

@@ -1,4 +1,4 @@
-namespace PBIDataModelMetadata
+namespace ModelMetadata
 
 type DataAccessOptions = {
     legacyRedirects: bool

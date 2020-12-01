@@ -4,9 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ModelMetadata.fs" />
     <Compile Include="TabularModel.fs" />
-    <Compile Include="PBIDataModelMetadata.fs" />
-    <Compile Include="Program.fs" />
+    <Compile Include="PbitReader.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FSharp.Data" Version="3.3.3" />
